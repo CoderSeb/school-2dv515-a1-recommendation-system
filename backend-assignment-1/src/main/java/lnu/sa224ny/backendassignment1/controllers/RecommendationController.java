@@ -1,5 +1,6 @@
 package lnu.sa224ny.backendassignment1.controllers;
 
+import lnu.sa224ny.backendassignment1.dtos.SIMILARITY;
 import lnu.sa224ny.backendassignment1.dtos.SimUserDTO;
 import lnu.sa224ny.backendassignment1.models.Rating;
 import lnu.sa224ny.backendassignment1.models.Recommendation;
@@ -44,13 +45,26 @@ public class RecommendationController {
     @RequestMapping("/api/recommendation/top-matching-users")
     public List<SimUserDTO> topMatchingUsers(@RequestParam String user, @RequestParam String method, @RequestParam String similarity, @RequestParam int count) {
         User activeUser = usersService.getByUsername(user);
-        List<SimUserDTO> result = recommendationsService.getEuclideanTopMatchingUsers(activeUser, count).stream().map(usr -> {
-            SimUserDTO dtoUsr = new SimUserDTO();
-            dtoUsr.id = usr.user.getId();
-            dtoUsr.name = usr.user.getName();
-            dtoUsr.score = usr.score;
-            return dtoUsr;
-        }).toList();
+
+        List<SimUserDTO> result = null;
+        if (Objects.equals(similarity, SIMILARITY.Euclidean.label)) {
+            result = recommendationsService.getEuclideanTopMatchingUsers(activeUser, count).stream().map(usr -> {
+                SimUserDTO dtoUsr = new SimUserDTO();
+                dtoUsr.id = usr.user.getId();
+                dtoUsr.name = usr.user.getName();
+                dtoUsr.score = usr.score;
+                return dtoUsr;
+            }).toList();
+        } else if (Objects.equals(similarity, SIMILARITY.Pearson.label)) {
+            result = recommendationsService.getPearsonTopMatchingUsers(activeUser, count).stream().map(usr -> {
+                SimUserDTO dtoUsr = new SimUserDTO();
+                dtoUsr.id = usr.user.getId();
+                dtoUsr.name = usr.user.getName();
+                dtoUsr.score = usr.score;
+                return dtoUsr;
+            }).toList();
+        }
+
         return result;
     }
 }

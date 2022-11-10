@@ -22,12 +22,17 @@ public class RecommendationsService {
     private UsersService usersService;
 
     public List<SimilarUser> getEuclideanTopMatchingUsers(User user, int count) {
-        List<SimilarUser> similarUsers = getSimilarUsers(user);
+        List<SimilarUser> similarUsers = getEuclideanSimilarUsers(user);
+        return new ArrayList<>(similarUsers.subList(0, count));
+    }
+
+    public List<SimilarUser> getPearsonTopMatchingUsers(User user, int count) {
+        List<SimilarUser> similarUsers = getPearsonSimilarUsers(user);
         return new ArrayList<>(similarUsers.subList(0, count));
     }
 
 
-    private List<SimilarUser> getSimilarUsers(User user) {
+    private List<SimilarUser> getEuclideanSimilarUsers(User user) {
         List<User> userList = usersService.getAll();
         List<SimilarUser> similarUsers = new ArrayList<>();
         for (User usr : userList) {
@@ -35,6 +40,22 @@ public class RecommendationsService {
                 SimilarUser simUser = new SimilarUser();
                 simUser.user = usr;
                 simUser.score = euclidean(user, usr);
+                similarUsers.add(simUser);
+            }
+        }
+        similarUsers.sort(Comparator.comparing(SimilarUser::getScore).reversed());
+
+        return similarUsers;
+    }
+
+    private List<SimilarUser> getPearsonSimilarUsers(User user) {
+        List<User> userList = usersService.getAll();
+        List<SimilarUser> similarUsers = new ArrayList<>();
+        for (User usr : userList) {
+            if (usr != user) {
+                SimilarUser simUser = new SimilarUser();
+                simUser.user = usr;
+                simUser.score = pearson(user, usr);
                 similarUsers.add(simUser);
             }
         }
@@ -54,7 +75,6 @@ public class RecommendationsService {
         for (Rating rA : userARatings) {
             for (Rating rB : userBRatings) {
                 if (rA.getMovieId() == rB.getMovieId()) {
-                    System.out.println("Reached!");
                     similarity += Math.pow((rA.getRating() - rB.getRating()), 2);
                     counter++;
                 }
@@ -79,7 +99,7 @@ public class RecommendationsService {
         int counter = 0;
         for (Rating rA : userARatings) {
             for (Rating rB : userBRatings) {
-                if (rA == rB) {
+                if (rA.getMovieId() == rB.getMovieId()) {
                     sumOne += rA.getRating();
                     sumTwo += rB.getRating();
                     sumOneSquared += Math.pow(rA.getRating(), 2);
