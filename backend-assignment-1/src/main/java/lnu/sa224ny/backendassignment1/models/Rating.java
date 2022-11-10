@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Rating {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne

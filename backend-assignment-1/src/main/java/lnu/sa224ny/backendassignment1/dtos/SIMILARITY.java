@@ -1,2 +1,6 @@
-package lnu.sa224ny.backendassignment1.dtos;public enum SIMILARITY {
+package lnu.sa224ny.backendassignment1.dtos;
+
+public enum SIMILARITY {
+    Pearsons,
+    Euclidean
 }
