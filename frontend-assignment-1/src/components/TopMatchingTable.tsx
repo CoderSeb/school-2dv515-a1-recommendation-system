@@ -77,7 +77,7 @@ function TopMatchingTable() {
               <tr key={item.id + item.score}>
                 <td>{item.name}</td>
                 <td>{item.id}</td>
-                <td>{item.score}</td>
+                <td>{item.score.toFixed(4)}</td>
               </tr>
             ))}
           </tbody>

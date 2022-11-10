@@ -23,7 +23,7 @@ public class RecommendationsService {
 
     public List<SimilarUser> getEuclideanTopMatchingUsers(User user, int count) {
         List<SimilarUser> similarUsers = getSimilarUsers(user);
-        return new ArrayList<>(similarUsers.subList(similarUsers.size() - count, similarUsers.size()));
+        return new ArrayList<>(similarUsers.subList(0, count));
     }
 
 
@@ -38,21 +38,23 @@ public class RecommendationsService {
                 similarUsers.add(simUser);
             }
         }
-        Collections.sort(similarUsers, (o1, o2) -> Float.compare(o1.score, o2.score));
-        System.out.println(similarUsers);
+        similarUsers.sort(Comparator.comparing(SimilarUser::getScore).reversed());
+
         return similarUsers;
     }
 
-    private float euclidean(User userA, User userB) {
+    private double euclidean(User userA, User userB) {
         List<Rating> userARatings = ratingsService.getAllByUserId(userA.getId());
         List<Rating> userBRatings = ratingsService.getAllByUserId(userB.getId());
-        float similarity = 0;
+
+        double similarity = 0;
 
         int counter = 0;
 
         for (Rating rA : userARatings) {
             for (Rating rB : userBRatings) {
-                if (rA == rB) {
+                if (rA.getMovieId() == rB.getMovieId()) {
+                    System.out.println("Reached!");
                     similarity += Math.pow((rA.getRating() - rB.getRating()), 2);
                     counter++;
                 }
@@ -62,7 +64,9 @@ public class RecommendationsService {
         if (counter == 0) {
             return 0;
         }
-        float invertedScore = 1 / (1 + similarity);
+
+        double invertedScore = 1 / (1 + similarity);
+
         return invertedScore;
     }
 

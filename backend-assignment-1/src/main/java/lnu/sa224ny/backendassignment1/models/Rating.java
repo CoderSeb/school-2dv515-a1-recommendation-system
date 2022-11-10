@@ -43,4 +43,9 @@ public class Rating {
     public double getRating() {
         return rating;
     }
+
+    @Override
+    public String toString() {
+        return "user: " + getUserId() + ", movie: " + getMovieId() + ", rating: " + getRating();
+    }
 }
