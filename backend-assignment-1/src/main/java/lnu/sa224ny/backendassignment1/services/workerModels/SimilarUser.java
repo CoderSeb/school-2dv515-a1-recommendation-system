@@ -1,4 +1,6 @@
-package lnu.sa224ny.backendassignment1.models;
+package lnu.sa224ny.backendassignment1.services.workerModels;
+
+import lnu.sa224ny.backendassignment1.models.User;
 
 public class SimilarUser {
     public User user;

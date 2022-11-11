@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from './styles/TableManager.module.css';
 import TopMatchingTable from "./TopMatchingTable";
+import TopRecommendedTable from "./TopRecommendedTable";
 
 export enum SELECTION {
   NOTHING,
@@ -47,7 +48,8 @@ function TableManager({ tableSelection, params }: ITableManagerProps) {
         )
       case SELECTION.REC_MOVIES:
         return (
-          <div>Recommended movies to come...</div>
+          <TopRecommendedTable
+            params={parameters} />
         )
       case SELECTION.REC_MOVIES_IB:
         return (

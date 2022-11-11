@@ -1,4 +1,4 @@
-package lnu.sa224ny.backendassignment1.models;
+package lnu.sa224ny.backendassignment1.services.workerModels;
 
 public class Recommendation {
     private String movieName;
