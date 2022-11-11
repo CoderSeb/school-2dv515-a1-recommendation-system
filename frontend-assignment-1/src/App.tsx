@@ -23,11 +23,12 @@ function App() {
   const [users, setUsers] = useState<IUser[]>([]);
   const userRef = useRef<IUser>({ id: -1, name: "" })
   const similarityRef = useRef<SIMILARITY>(SIMILARITY.Euclidean)
+  const recMethodRef = useRef<REC_METHOD>(REC_METHOD.ItemBased)
   const [userSelection, setUserSelection] = useState<IUserSelectionObject[]>([])
   const [params, setParams] = useState<TRecParams>({
     userName: userRef.current.name,
-    method: REC_METHOD.UserBased,
-    similarity: SIMILARITY.Euclidean,
+    method: recMethodRef.current,
+    similarity: similarityRef.current,
     count: count
   })
 
@@ -73,6 +74,11 @@ function App() {
     setParams({ ...params, similarity: similarityRef.current })
   }
 
+  const handleCorrelationChange = (selectedOption: any) => {
+    recMethodRef.current = selectedOption.label
+    setParams({ ...params, method: recMethodRef.current })
+  }
+
   const handleCountChange = (event: any) => {
     const value = parseInt(event.target.value)
     if (value > 0 && value < users.length) {
@@ -90,6 +96,7 @@ function App() {
         <div className={styles.tableOptions}>
           {userSelection.length > 0 && <Select placeholder="Choose user..." className={styles.nameSelection} options={userSelection} onChange={handleUserChange} />}
           <Select placeholder="Choose similarity..." className={styles.similaritySelection} options={[{ value: 0, label: "Euclidean" }, { value: 1, label: "Pearson" }]} onChange={handleSimilarityChange} />
+          <Select placeholder="Choose method..." className={styles.methodSelection} options={[{ value: 0, label: "ItemBased" }, { value: 1, label: "UserBased" }]} onChange={handleCorrelationChange} />
           <input type="number" className={styles.countInput} value={count} onChange={handleCountChange} />
         </div>
         {userRef.current.id !== 0 && <p>Selected user: {userRef.current.name}</p>}

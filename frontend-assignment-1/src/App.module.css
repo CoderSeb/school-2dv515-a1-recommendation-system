@@ -27,6 +27,10 @@
   flex-grow: 3;
 }
 
+.methodSelection {
+  flex-grow: 3;
+}
+
 .countInput {
   flex-grow: 1;
 }
