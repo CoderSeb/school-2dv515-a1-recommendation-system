@@ -20,9 +20,13 @@
 }
 
 .nameSelection {
-  flex-grow: 1;
+  flex-grow: 3;
 }
 
 .similaritySelection {
+  flex-grow: 3;
+}
+
+.countInput {
   flex-grow: 1;
 }

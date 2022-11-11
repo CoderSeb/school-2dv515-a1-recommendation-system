@@ -73,6 +73,13 @@ function App() {
     setParams({ ...params, similarity: similarityRef.current })
   }
 
+  const handleCountChange = (event: any) => {
+    const value = parseInt(event.target.value)
+    if (value > 0 && value < users.length) {
+      setCount(value)
+    }
+  }
+
   if (error) {
     return <div>Error: {error}</div>
   } else if (!isLoaded) {
@@ -83,6 +90,7 @@ function App() {
         <div className={styles.tableOptions}>
           {userSelection.length > 0 && <Select placeholder="Choose user..." className={styles.nameSelection} options={userSelection} onChange={handleUserChange} />}
           <Select placeholder="Choose similarity..." className={styles.similaritySelection} options={[{ value: 0, label: "Euclidean" }, { value: 1, label: "Pearson" }]} onChange={handleSimilarityChange} />
+          <input type="number" className={styles.countInput} value={count} onChange={handleCountChange} />
         </div>
         {userRef.current.id !== 0 && <p>Selected user: {userRef.current.name}</p>}
         {userRef.current.name !== "" && (
