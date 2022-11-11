@@ -15,4 +15,12 @@ public class RatingsService {
     public List<Rating> getAllByUserId(int user_id) {
         return ratingRepository.findByUser_Id(user_id);
     }
+
+    public List<Rating> getAll() {
+        return ratingRepository.findAll();
+    }
+
+    public Rating getByMovieAndUserId(int movieId, int userId) {
+        return ratingRepository.findByMovie_IdAndUser_Id(movieId, userId);
+    }
 }

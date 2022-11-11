@@ -12,8 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-import java.io.FileNotFoundException;
-
 @SpringBootApplication
 public class BackendAssignment1Application {
     private static final Logger logger = LoggerFactory.getLogger(BackendAssignment1Application.class);
@@ -36,7 +34,7 @@ public class BackendAssignment1Application {
             CSVHandler csvHandler = new CSVHandler("src/files/movies_example", userRepository, movieRepository, ratingRepository);
             csvHandler.loadCSVsIntoDb();
             logger.info("Finished...");
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.warn(e.getMessage());
         }
 

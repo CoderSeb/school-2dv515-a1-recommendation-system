@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     env_file:
-      - spring.env
+      - spring.env # Containing SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD & SPRING_JPA_HIBERNATE_DDL_AUTO
 
   db:
     image: 'postgres:15.0-alpine'
@@ -17,5 +17,5 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - postgres.env
+      - postgres.env # Containing POSTGRES_USER, POSTGRES_PASSWORD & POSTGRES_DB
     restart: unless-stopped

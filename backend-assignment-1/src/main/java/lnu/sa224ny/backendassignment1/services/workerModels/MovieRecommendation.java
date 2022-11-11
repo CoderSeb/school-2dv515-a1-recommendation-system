@@ -1,11 +1,11 @@
 package lnu.sa224ny.backendassignment1.services.workerModels;
 
-public class Recommendation {
+public class MovieRecommendation {
     private String movieName;
     private int movieId;
     private double score;
 
-    public Recommendation(String movieName, int movieId, double score) {
+    public MovieRecommendation(String movieName, int movieId, double score) {
         this.movieName = movieName;
         this.movieId = movieId;
         this.score = score;
