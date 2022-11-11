@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import styles from './styles/TopMatchingTable.module.css';
+import { TRecParams } from './TableManager';
 
 interface IMatchingUser {
   id: number,
@@ -8,42 +9,20 @@ interface IMatchingUser {
   score: number
 }
 
-
-enum SIMILARITY {
-  Euclidean = "Euclidean",
-  Pearson = "Pearson"
-}
-
-enum REC_METHOD {
-  ItemBased = "ItemBased",
-  UserBased = "UserBased"
-}
-
-type TRecParams = {
-  userName: string;
-  method: REC_METHOD;
-  similarity: SIMILARITY;
-}
-
-function TopMatchingTable() {
+function TopMatchingTable({ params }: { params: TRecParams }) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState<IMatchingUser[]>([]);
-  const [user, setUser] = useState<string>("Toby")
-  const [similarity, setSimilarity] = useState<SIMILARITY>(SIMILARITY.Euclidean)
-  const [recMethod, setRecMethod] = useState<REC_METHOD>(REC_METHOD.ItemBased)
-  const [count, setCount] = useState<number>(3)
-  const baseRec: TRecParams = {
-    userName: user,
-    method: recMethod,
-    similarity: similarity
-  }
+  const userRef = useRef<String>(params.userName)
+  const [recParams, setRecParams] = useState<TRecParams>(params)
 
-  const [recParams, setRecParams] = useState<TRecParams>(baseRec)
+  useEffect(() => {
+    setRecParams(params)
+  }, [params])
 
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/recommendation/top-matching-users?user=${recParams.userName}&method=${recParams.method}&similarity=${recParams.similarity}&count=${count}`)
+    fetch(`http://localhost:8080/api/recommendation/top-matching-users?user=${recParams.userName}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
       .then(res => res.json())
       .then(
         (result: IMatchingUser[]) => {
@@ -55,7 +34,7 @@ function TopMatchingTable() {
           setError(error);
         }
       )
-  }, [recParams])
+  }, [recParams, userRef])
 
   if (error) {
     return <div>Error: {error}</div>
@@ -64,8 +43,10 @@ function TopMatchingTable() {
   } else {
     return (
       <div className={styles.container}>
+        <h3>Top matching users for {params.userName} using {params.similarity}</h3>
         <Table striped bordered hover variant="dark">
           <thead>
+
             <tr>
               <th>User</th>
               <th>User ID</th>
@@ -73,7 +54,7 @@ function TopMatchingTable() {
             </tr>
           </thead>
           <tbody>
-            {items.map(item => (
+            {items.length > 0 && items.map(item => (
               <tr key={item.id + item.score}>
                 <td>{item.name}</td>
                 <td>{item.id}</td>
