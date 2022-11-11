@@ -30,11 +30,17 @@ public class BackendAssignment1Application {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void runAfterStartup() throws FileNotFoundException {
+    public void runAfterStartup() throws Exception {
         logger.info("Loading CSV into DB...");
-        CSVHandler csvHandler = new CSVHandler("src/files/movies_example", userRepository, movieRepository, ratingRepository);
-        csvHandler.loadCSVsIntoDb();
-        logger.info("Finished...");
+        try {
+            CSVHandler csvHandler = new CSVHandler("src/files/movies_example", userRepository, movieRepository, ratingRepository);
+            csvHandler.loadCSVsIntoDb();
+            logger.info("Finished...");
+        } catch(Exception e) {
+            logger.warn(e.getMessage());
+        }
+
+
     }
 
 }
