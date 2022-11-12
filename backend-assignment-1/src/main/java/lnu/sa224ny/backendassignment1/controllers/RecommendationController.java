@@ -1,5 +1,8 @@
 package lnu.sa224ny.backendassignment1.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lnu.sa224ny.backendassignment1.dtos.RecommendationRequestDTO;
 import lnu.sa224ny.backendassignment1.dtos.SIMILARITY;
 import lnu.sa224ny.backendassignment1.dtos.SimUserDTO;
 import lnu.sa224ny.backendassignment1.models.User;
@@ -24,26 +27,26 @@ public class RecommendationController {
 
 
     @RequestMapping("/api/recommendation")
-    public List<MovieRecommendation> recommendations(@RequestParam String user, @RequestParam String method, @RequestParam String similarity, @RequestParam int count) {
-        User activeUser = usersService.getByUsername(user);
+    public List<MovieRecommendation> recommendations(RecommendationRequestDTO request) {
+        User activeUser = usersService.getByUsername(request.getUserName());
         List<MovieRecommendation> result;
-        if (Objects.equals(similarity, SIMILARITY.Euclidean.label)) {
-            result = recommendationsService.getEuclideanRecommendedMovies(activeUser, count);
+        if (Objects.equals(request.getSimilarity(), SIMILARITY.Euclidean.label)) {
+            result = recommendationsService.getEuclideanRecommendedMovies(activeUser, request.getCount());
         } else {
-            result = recommendationsService.getPearsonRecommendedMovies(activeUser, count);
+            result = recommendationsService.getPearsonRecommendedMovies(activeUser, request.getCount());
         }
         return result;
     }
 
     @RequestMapping("/api/recommendation/top-matching-users")
-    public List<SimUserDTO> topMatchingUsers(@RequestParam String user, @RequestParam String method, @RequestParam String similarity, @RequestParam int count) {
-        User activeUser = usersService.getByUsername(user);
+    public List<SimUserDTO> topMatchingUsers(RecommendationRequestDTO request) {
+        User activeUser = usersService.getByUsername(request.getUserName());
 
         List<SimUserDTO> result = null;
-        if (Objects.equals(similarity, SIMILARITY.Euclidean.label)) {
-            result = recommendationsService.getEuclideanTopMatchingUsers(activeUser, count);
-        } else if (Objects.equals(similarity, SIMILARITY.Pearson.label)) {
-            result = recommendationsService.getPearsonTopMatchingUsers(activeUser, count);
+        if (Objects.equals(request.getSimilarity(), SIMILARITY.Euclidean.label)) {
+            result = recommendationsService.getEuclideanTopMatchingUsers(activeUser, request.getCount());
+        } else if (Objects.equals(request.getSimilarity(), SIMILARITY.Pearson.label)) {
+            result = recommendationsService.getPearsonTopMatchingUsers(activeUser, request.getCount());
         }
 
         return result;
