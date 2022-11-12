@@ -2,18 +2,22 @@ package lnu.sa224ny.backendassignment1.services;
 
 import lnu.sa224ny.backendassignment1.models.User;
 import lnu.sa224ny.backendassignment1.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UsersService {
-    @Autowired
+
     private UserRepository userRepository;
 
-    public User getByUsername(String name) {
-        return userRepository.findByName(name);
+
+    public User getById(int userId) {
+        Optional<User> foundUser = userRepository.findById(userId);
+        return foundUser.orElse(null);
     }
 
     public List<User> getAll() {

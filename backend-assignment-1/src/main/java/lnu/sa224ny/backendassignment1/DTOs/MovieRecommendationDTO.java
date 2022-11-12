@@ -1,7 +1,14 @@
-package lnu.sa224ny.backendassignment1.dtos;
+package lnu.sa224ny.backendassignment1.DTOs;
 
-public class MovieRecDTO {
-    public String name;
-    public int id;
-    public double score;
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Data
+public class MovieRecommendationDTO {
+    private String title;
+    private int id;
+    private double score;
 }

@@ -1,5 +1,6 @@
 package lnu.sa224ny.backendassignment1.models;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@Data
 @NoArgsConstructor
 public class User {
     @Id

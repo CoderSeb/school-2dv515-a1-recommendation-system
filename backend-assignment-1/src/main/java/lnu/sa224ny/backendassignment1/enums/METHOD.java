@@ -1,4 +1,4 @@
-package lnu.sa224ny.backendassignment1.dtos;
+package lnu.sa224ny.backendassignment1.enums;
 
 public enum METHOD {
     ItemBased("ItemBased"),

@@ -1,12 +1,13 @@
 package lnu.sa224ny.backendassignment1.services;
 
-import lnu.sa224ny.backendassignment1.dtos.SimUserDTO;
+import lnu.sa224ny.backendassignment1.DTOs.MovieRecommendationDTO;
+import lnu.sa224ny.backendassignment1.DTOs.SimilarUserDTO;
 import lnu.sa224ny.backendassignment1.models.Movie;
 import lnu.sa224ny.backendassignment1.models.Rating;
 import lnu.sa224ny.backendassignment1.models.User;
-import lnu.sa224ny.backendassignment1.services.workerModels.MovieRecommendation;
+
 import lnu.sa224ny.backendassignment1.services.workerModels.SimilarUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,36 +16,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class RecommendationsService {
-    @Autowired
+
     private RatingsService ratingsService;
 
-    @Autowired
+
     private UsersService usersService;
 
-    @Autowired
+
     private MoviesService moviesService;
 
-    public List<SimUserDTO> getEuclideanTopMatchingUsers(User user, int count) {
+    public List<SimilarUserDTO> getEuclideanTopMatchingUsers(User user, int count) {
         List<SimilarUser> similarUsers = getEuclideanSimilarUsers(user);
         return similarUsers.subList(0, count).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
     }
 
-    public List<SimUserDTO> getPearsonTopMatchingUsers(User user, int count) {
+    public List<SimilarUserDTO> getPearsonTopMatchingUsers(User user, int count) {
         List<SimilarUser> similarUsers = getPearsonSimilarUsers(user);
         return similarUsers.subList(0, count).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
     }
 
-    private SimUserDTO convertSimUserToDTO(SimilarUser user) {
-        SimUserDTO newSimDTO = new SimUserDTO();
-        newSimDTO.name = user.user.getName();
-        newSimDTO.id = user.user.getId();
-        newSimDTO.score = user.score;
+    private SimilarUserDTO convertSimUserToDTO(SimilarUser user) {
+        SimilarUserDTO newSimDTO = new SimilarUserDTO();
+        newSimDTO.setName(user.user.getName());
+        newSimDTO.setId(user.user.getId());
+        newSimDTO.setScore(user.score);
         return newSimDTO;
     }
 
-    public List<MovieRecommendation> getEuclideanRecommendedMovies(User user, int count) {
-        List<MovieRecommendation> result = new ArrayList<>();
+    public List<MovieRecommendationDTO> getEuclideanRecommendedMovies(User user, int count) {
+        List<MovieRecommendationDTO> result = new ArrayList<>();
         List<SimilarUser> similarUsers = getEuclideanSimilarUsers(user);
         return getMovieRecommendations(count, result, similarUsers, user.getId());
     }
@@ -58,13 +60,13 @@ public class RecommendationsService {
     }
 
 
-    public List<MovieRecommendation> getPearsonRecommendedMovies(User user, int count) {
-        List<MovieRecommendation> result = new ArrayList<>();
+    public List<MovieRecommendationDTO> getPearsonRecommendedMovies(User user, int count) {
+        List<MovieRecommendationDTO> result = new ArrayList<>();
         List<SimilarUser> similarUsers = getPearsonSimilarUsers(user);
         return getMovieRecommendations(count, result, similarUsers, user.getId());
     }
 
-    private List<MovieRecommendation> getMovieRecommendations(int count, List<MovieRecommendation> result, List<SimilarUser> similarUsers, int userId) {
+    private List<MovieRecommendationDTO> getMovieRecommendations(int count, List<MovieRecommendationDTO> result, List<SimilarUser> similarUsers, int userId) {
         List<Movie> allMovies = moviesService.getAll();
         List<Rating> allUserRatings = ratingsService.getAllByUserId(userId);
 
@@ -80,11 +82,11 @@ public class RecommendationsService {
                     }
                 }
                 double weightedScore = weightedSum / similaritySum;
-                MovieRecommendation newRecommendation = new MovieRecommendation(movie.getTitle(), movie.getId(), weightedScore);
+                MovieRecommendationDTO newRecommendation = new MovieRecommendationDTO(movie.getTitle(), movie.getId(), weightedScore);
                 result.add(newRecommendation);
             }
         }
-        result.sort(Comparator.comparing(MovieRecommendation::getScore).reversed());
+        result.sort(Comparator.comparing(MovieRecommendationDTO::getScore).reversed());
         return result.subList(0, count);
     }
 
@@ -151,9 +153,7 @@ public class RecommendationsService {
             return 0;
         }
 
-        double invertedScore = 1 / (1 + similarity);
-
-        return invertedScore;
+        return 1 / (1 + similarity);
     }
 
     private float pearson(User userA, User userB) {

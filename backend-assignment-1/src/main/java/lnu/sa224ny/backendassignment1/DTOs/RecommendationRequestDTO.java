@@ -1,4 +1,4 @@
-package lnu.sa224ny.backendassignment1.dtos;
+package lnu.sa224ny.backendassignment1.DTOs;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @Data
 public class RecommendationRequestDTO {
-    private String userName;
+    private int userId;
     private String method;
     private String similarity;
     private int count;

@@ -1,7 +1,14 @@
-package lnu.sa224ny.backendassignment1.dtos;
+package lnu.sa224ny.backendassignment1.DTOs;
 
-public class SimUserDTO {
-    public String name = null;
-    public int id = 0;
-    public double score = 0;
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Data
+public class SimilarUserDTO {
+    private String name = null;
+    private int id = 0;
+    private double score = 0;
 }

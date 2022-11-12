@@ -1,11 +1,13 @@
 package lnu.sa224ny.backendassignment1.models;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ratings")
+@Data
 @NoArgsConstructor
 public class Rating {
     @Id
