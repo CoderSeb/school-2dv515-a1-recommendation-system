@@ -21,6 +21,7 @@ export enum REC_METHOD {
 }
 
 export type TRecParams = {
+  userId: number;
   userName: string;
   method: REC_METHOD;
   similarity: SIMILARITY;

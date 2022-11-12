@@ -4,8 +4,8 @@ import styles from './styles/TopRecommendedTable.module.css';
 import { TRecParams } from './TableManager';
 
 interface IRecommendedMovie {
-  movieName: string,
-  movieId: number,
+  title: string,
+  id: number,
   score: number
 }
 
@@ -22,7 +22,7 @@ function TopRecommendedTable({ params }: { params: TRecParams }) {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/recommendation?user=${recParams.userName}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
+    fetch(`http://localhost:8080/api/recommendation?userId=${recParams.userId}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
       .then(res => res.json())
       .then(
         (result: IRecommendedMovie[]) => {
@@ -55,9 +55,9 @@ function TopRecommendedTable({ params }: { params: TRecParams }) {
           </thead>
           <tbody>
             {items.length > 0 && items.map(item => (
-              <tr key={item.movieId + item.score}>
-                <td>{item.movieName}</td>
-                <td>{item.movieId}</td>
+              <tr key={item.id + item.score}>
+                <td>{item.title}</td>
+                <td>{item.id}</td>
                 <td>{item.score.toFixed(4)}</td>
               </tr>
             ))}

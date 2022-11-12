@@ -22,7 +22,7 @@ function TopMatchingTable({ params }: { params: TRecParams }) {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/recommendation/top-matching-users?user=${recParams.userName}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
+    fetch(`http://localhost:8080/api/recommendation/top-matching-users?userId=${recParams.userId}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
       .then(res => res.json())
       .then(
         (result: IMatchingUser[]) => {
