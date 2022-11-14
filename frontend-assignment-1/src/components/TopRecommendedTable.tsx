@@ -20,9 +20,10 @@ function TopRecommendedTable({ params }: { params: TRecParams }) {
     setRecParams(params)
   }, [params])
 
+  const backendUrl: string = process.env.BACKEND_URL || "http://localhost:8080/"
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/recommendation?userId=${recParams.userId}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
+    fetch(`${backendUrl}api/recommendation?userId=${recParams.userId}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)
       .then(res => res.json())
       .then(
         (result: IRecommendedMovie[]) => {

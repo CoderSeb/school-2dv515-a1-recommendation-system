@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
+@PropertySource({"classpath:application-${spring.profiles.active}.properties"})
 public class BackendAssignment1Application {
     private static final Logger logger = LoggerFactory.getLogger(BackendAssignment1Application.class);
     @Autowired

@@ -2,8 +2,8 @@ package lnu.sa224ny.backendassignment1.controllers;
 
 import lnu.sa224ny.backendassignment1.DTOs.MovieRecommendationDTO;
 import lnu.sa224ny.backendassignment1.DTOs.RecommendationRequestDTO;
-import lnu.sa224ny.backendassignment1.enums.SIMILARITY;
 import lnu.sa224ny.backendassignment1.DTOs.SimilarUserDTO;
+import lnu.sa224ny.backendassignment1.enums.SIMILARITY;
 import lnu.sa224ny.backendassignment1.models.User;
 import lnu.sa224ny.backendassignment1.services.RecommendationsService;
 import lombok.AllArgsConstructor;

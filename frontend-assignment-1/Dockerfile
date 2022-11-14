@@ -11,6 +11,6 @@ RUN yarn build
 RUN npm install -g serve
 
 ENV NODE_ENV=production
-EXPOSE $PORT
+EXPOSE 3000
 
-ENTRYPOINT ["yarn", "serve"]
+CMD ["yarn", "serve"]

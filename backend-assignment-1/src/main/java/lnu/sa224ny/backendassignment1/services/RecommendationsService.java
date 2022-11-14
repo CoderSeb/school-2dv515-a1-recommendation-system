@@ -5,7 +5,6 @@ import lnu.sa224ny.backendassignment1.DTOs.SimilarUserDTO;
 import lnu.sa224ny.backendassignment1.models.Movie;
 import lnu.sa224ny.backendassignment1.models.Rating;
 import lnu.sa224ny.backendassignment1.models.User;
-
 import lnu.sa224ny.backendassignment1.services.workerModels.SimilarUser;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

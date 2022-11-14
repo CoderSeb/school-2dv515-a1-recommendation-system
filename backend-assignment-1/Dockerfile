@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=BUILD_IMAGE '/app/src/files' '/app/src/files'
 COPY --from=BUILD_IMAGE '/app/build/libs/app-0.0.1-SNAPSHOT.jar' '/app/application.jar'
 EXPOSE 8080
-CMD ["java","-jar","/app/application.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=$SPRING_ENV", "-jar", "/app/application.jar"]

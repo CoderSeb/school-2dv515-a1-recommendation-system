@@ -33,8 +33,9 @@ function App() {
     count: count
   })
 
+  const backendUrl: string = process.env.BACKEND_URL || "http://localhost:8080/"
   useEffect(() => {
-    fetch("http://localhost:8080/api/users")
+    fetch(`${backendUrl}api/users`)
       .then(res => res.json())
       .then(
         (result: IUser[]) => {
