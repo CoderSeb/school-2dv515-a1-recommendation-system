@@ -1,5 +1,14 @@
 # A1 - Recommendation System
 
+## Notes from student
+
+Even though we had somewhat limited time I wanted to try Spring Boot in Java with a PostgreSQL database as backend.
+Frontend is build with Vite+React+TypeScript.
+
+Backend is live here: [Backend](https://sebs-assignment-1-backend.herokuapp.com/)
+
+Frontend is live here: [Frontend](https://sebs-assignment-1-frontend.herokuapp.com/)
+
 ## Description
 
 * In this assignment, you shall implement a recommendation system for the movie's data set.
