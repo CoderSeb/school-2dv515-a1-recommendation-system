@@ -20,7 +20,7 @@ function TopRecommendedTable({ params }: { params: TRecParams }) {
     setRecParams(params)
   }, [params])
 
-  const backendUrl: string = process.env.BACKEND_URL || "http://localhost:8080/"
+  const backendUrl: string = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/"
 
   useEffect(() => {
     fetch(`${backendUrl}api/recommendation?userId=${recParams.userId}&method=${recParams.method}&similarity=${recParams.similarity}&count=${recParams.count}`)

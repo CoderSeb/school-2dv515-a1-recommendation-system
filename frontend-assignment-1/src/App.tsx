@@ -33,7 +33,7 @@ function App() {
     count: count
   })
 
-  const backendUrl: string = process.env.BACKEND_URL || "http://localhost:8080/"
+  const backendUrl: string = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080/"
   useEffect(() => {
     fetch(`${backendUrl}api/users`)
       .then(res => res.json())
