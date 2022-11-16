@@ -28,11 +28,17 @@ public class RecommendationsService {
 
     public List<SimilarUserDTO> getEuclideanTopMatchingUsers(User user, int count) {
         List<SimilarUser> similarUsers = getEuclideanSimilarUsers(user);
+        if (similarUsers.size() < count) {
+           return similarUsers.subList(0, similarUsers.size()).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
+        }
         return similarUsers.subList(0, count).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
     }
 
     public List<SimilarUserDTO> getPearsonTopMatchingUsers(User user, int count) {
         List<SimilarUser> similarUsers = getPearsonSimilarUsers(user);
+        if (similarUsers.size() < count) {
+            return similarUsers.subList(0, similarUsers.size()).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
+        }
         return similarUsers.subList(0, count).stream().map(this::convertSimUserToDTO).collect(Collectors.toList());
     }
 
@@ -86,6 +92,9 @@ public class RecommendationsService {
             }
         }
         result.sort(Comparator.comparing(MovieRecommendationDTO::getScore).reversed());
+        if (result.size() < count) {
+            return result;
+        }
         return result.subList(0, count);
     }
 

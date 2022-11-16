@@ -33,7 +33,7 @@ public class BackendAssignment1Application {
     public void runAfterStartup() throws Exception {
         logger.info("Loading CSV into DB...");
         try {
-            CSVHandler csvHandler = new CSVHandler("src/files/movies_large", userRepository, movieRepository, ratingRepository);
+            CSVHandler csvHandler = new CSVHandler("src/files/movies_example", userRepository, movieRepository, ratingRepository);
             csvHandler.loadCSVsIntoDb();
             logger.info("Finished...");
         } catch (Exception e) {
