@@ -3,6 +3,11 @@
 
 ## Heroku
 
+Live @ https://sebs-assignment-1-backend.herokuapp.com/api
+
+### Docker
+Start docker desktop
+
 ### Login
 heroku login
 heroku container:login
