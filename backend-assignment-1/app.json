@@ -1,0 +1,8 @@
+{
+  "name": "sebs-assignment-1-backend",
+  "buildpacks": [
+    {
+      "url": "heroku/gradle"
+    }
+  ]
+}
