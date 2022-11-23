@@ -87,8 +87,10 @@ public class RecommendationsService {
                     }
                 }
                 double weightedScore = weightedSum / similaritySum;
-                MovieRecommendationDTO newRecommendation = new MovieRecommendationDTO(movie.getTitle(), movie.getId(), weightedScore);
-                result.add(newRecommendation);
+                if (!Double.isNaN(weightedScore)) {
+                    MovieRecommendationDTO newRecommendation = new MovieRecommendationDTO(movie.getTitle(), movie.getId(), weightedScore);
+                    result.add(newRecommendation);
+                }
             }
         }
         result.sort(Comparator.comparing(MovieRecommendationDTO::getScore).reversed());
@@ -192,6 +194,4 @@ public class RecommendationsService {
 
         return (float) (num / den);
     }
-
-
 }

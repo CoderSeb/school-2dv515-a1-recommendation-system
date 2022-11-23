@@ -39,8 +39,5 @@ public class BackendAssignment1Application {
         } catch (Exception e) {
             logger.warn(e.getMessage());
         }
-
-
     }
-
 }

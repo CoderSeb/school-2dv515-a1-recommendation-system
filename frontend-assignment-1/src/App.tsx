@@ -39,8 +39,8 @@ function App() {
       .then(res => res.json())
       .then(
         (result: IUser[]) => {
-          setIsLoaded(true);
           setUsers(result);
+          setIsLoaded(true);
         },
         (error) => {
           setIsLoaded(true);
@@ -79,7 +79,7 @@ function App() {
 
   const handleCountChange = (event: any) => {
     const value = parseInt(event.target.value)
-    if (value > 0 && value < users.length) {
+    if (value > 0) {
       setCount(value)
     }
   }
